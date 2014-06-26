@@ -9,6 +9,8 @@ module ToDoApp {
         transform(o: Spiro.ResourceRepresentation, transformer: ITransformer): ng.IPromise<any>;
     }
 
+
+
     // this is the default transform strategy that flattens the object
     app.service('transformStrategy', function($q : ng.IQService) {
 
