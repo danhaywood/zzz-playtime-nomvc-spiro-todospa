@@ -5,21 +5,9 @@
 // tested
 var ToDoApp;
 (function (ToDoApp) {
-    // tested
     ToDoApp.app.controller('HomeController', function ($scope, repLoader, transformer) {
-        var actionResult = new Spiro.ActionResultRepresentation({});
-        actionResult.hateoasUrl = "http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke";
-        repLoader.populate(actionResult).then(function (ar) {
-            var list = ar.result().list().value().models;
-
-            $scope["todoItems"] = [];
-
-            _.each((list), function (l) {
-                var tgt = l.getTarget();
-                transformer.transform(tgt.hateoasUrl, Spiro.DomainObjectRepresentation).then(function (fo) {
-                    $scope["todoItems"].push(fo);
-                });
-            });
+        transformer.transform("http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke", Spiro.ActionResultRepresentation).then(function (todoItems) {
+            $scope["todoItems"] = todoItems;
         });
     });
 

@@ -5,10 +5,12 @@
 var ToDoApp;
 (function (ToDoApp) {
     // this is the default transform strategy that flattens the object
-    ToDoApp.app.service('transformStrategy', function () {
-        var transformer = this;
+    ToDoApp.app.service('transformStrategy', function ($q) {
+        var transformStrategy = this;
 
-        function transformObject(o) {
+        function transformObject(o, transformer) {
+            var defer = $q.defer();
+
             var names = _.map(o.propertyMembers(), function (v, n) {
                 return n;
             });
@@ -19,15 +21,37 @@ var ToDoApp;
             tdi["nof_rep"] = o;
             tdi["nof_url"] = "#" + "/" + o.domainType() + "/" + o.instanceId();
 
-            return tdi;
+            defer.resolve(tdi);
+
+            return defer.promise;
         }
         ;
 
-        transformer.transform = function (r) {
+        function transformActionResult(ar, transformer) {
+            var list = ar.result().list().value().models;
+
+            var resultArray = [];
+
+            _.each((list), function (l) {
+                var tgt = l.getTarget();
+                resultArray.push(transformer.transform(tgt.hateoasUrl, Spiro.DomainObjectRepresentation));
+            });
+
+            return $q.all(resultArray);
+        }
+        ;
+
+        transformStrategy.transform = function (r, transformer) {
             if (r instanceof Spiro.DomainObjectRepresentation) {
-                return transformObject(r);
+                return transformObject(r, transformer);
             }
-            return null;
+            if (r instanceof Spiro.ActionResultRepresentation) {
+                return transformActionResult(r, transformer);
+            }
+
+            var defer = $q.defer();
+            defer.reject("not supported rep");
+            return defer.promise;
         };
     });
 })(ToDoApp || (ToDoApp = {}));

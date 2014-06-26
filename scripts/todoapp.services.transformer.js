@@ -8,17 +8,11 @@ var ToDoApp;
         var transformer = this;
 
         transformer.transform = function tt(url, c) {
-            var deferred = $q.defer();
             var obj = new c({});
             obj.hateoasUrl = url;
-            repLoader.populate(obj).then(function (o) {
-                var flat = transformStrategy ? transformStrategy.transform(o) : o;
-                deferred.resolve(flat);
-            }, function () {
-                deferred.reject();
+            return repLoader.populate(obj).then(function (o) {
+                return transformStrategy.transform(o, transformer);
             });
-
-            return deferred.promise;
         };
     });
 })(ToDoApp || (ToDoApp = {}));
