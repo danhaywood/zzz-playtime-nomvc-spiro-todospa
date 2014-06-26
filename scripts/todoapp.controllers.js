@@ -20,14 +20,13 @@ var ToDoApp;
                 var tgt = l.getTarget();
 
                 repLoader.populate(tgt).then(function (t) {
-                    var tdi = {
-                        category: t.propertyMember("Category").value().toString(),
-                        description: t.propertyMember("Description").value().toString(),
-                        dueBy: t.propertyMember("DueBy").value().toString(),
-                        notes: t.propertyMember("Notes").value().toString(),
-                        complete: t.propertyMember("Complete").value().toString(),
-                        cost: t.propertyMember("Cost").value().toString()
-                    };
+                    var names = _.map(t.propertyMembers(), function (v, n) {
+                        return n;
+                    });
+                    var values = _.map(t.propertyMembers(), function (v) {
+                        return v.value().toString();
+                    });
+                    var tdi = _.object(names, values);
 
                     $scope["todoItems"].push(tdi);
                 });

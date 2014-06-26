@@ -28,21 +28,15 @@ module ToDoApp {
 
                 repLoader.populate(tgt).then((t: Spiro.DomainObjectRepresentation) => {
 
-                    var tdi = {
-                        category: t.propertyMember("Category").value().toString(),
-                        description: t.propertyMember("Description").value().toString(),
-                        dueBy: t.propertyMember("DueBy").value().toString(),
-                        notes: t.propertyMember("Notes").value().toString(),
-                        complete: t.propertyMember("Complete").value().toString(),
-                        cost: t.propertyMember("Cost").value().toString()
-                    }
+                    var names = _.map(t.propertyMembers(), (v, n: string) => n);
+                    var values = _.map(t.propertyMembers(), (v: Spiro.PropertyMember) =>  v.value().toString());               
+                    var tdi = _.object(names, values);
 
                     $scope["todoItems"].push(tdi);
 
                 });
 
             });
-
 
         });
 

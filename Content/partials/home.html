@@ -19,11 +19,11 @@
         <tbody>
             <tr ng-repeat="todoItem in todoItems | filter:search">
                 <td>
-                    <a ui-sref="edit({id:{{$index}}})">{{todoItem.description}}</a>
+                    <a ui-sref="edit({id:{{$index}}})">{{todoItem.Description}}</a>
                 </td>
-                <td>{{todoItem.category}}</td>
-                <td>{{todoItem.complete}}</td>
-                <td>{{todoItem.dueBy | date:'dd-MMM-yyyy'}}</td>
+                <td>{{todoItem.Category}}</td>
+                <td>{{todoItem.Complete}}</td>
+                <td>{{todoItem.DueBy | date:'dd-MMM-yyyy'}}</td>
                 <td>
                     <button class="btn btn-danger btn-xs" ng-click="delete($index)"><span class="glyphicon glyphicon-remove"></span><span class="label">Delete</span></button>
                 </td>
