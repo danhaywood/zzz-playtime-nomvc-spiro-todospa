@@ -16,7 +16,7 @@ module ToDoApp {
                 templateUrl: "Content/partials/home.html", 
                 controller: 'HomeController'
             }).
-            when('/todoitem/:tdid', {
+            when('/Domain.ToDoItem/:tdid', {
                 templateUrl: "Content/partials/todoitem.html",
                 controller: 'ToDoItemController'
             }).

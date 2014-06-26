@@ -11,7 +11,7 @@ var ToDoApp;
         $routeProvider.when('/home', {
             templateUrl: "Content/partials/home.html",
             controller: 'HomeController'
-        }).when('/todoitem/:tdid', {
+        }).when('/Domain.ToDoItem/:tdid', {
             templateUrl: "Content/partials/todoitem.html",
             controller: 'ToDoItemController'
         }).when('/create', {

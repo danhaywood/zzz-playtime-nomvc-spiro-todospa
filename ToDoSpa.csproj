@@ -99,6 +99,7 @@
     <None Include="scripts\jquery-2.1.1.intellisense.js" />
     <TypeScriptCompile Include="scripts\todoapp.app.ts" />
     <TypeScriptCompile Include="scripts\spiro.angular.services.representationloader.ts" />
+    <TypeScriptCompile Include="scripts\todoapp.services.flattener.ts" />
     <Content Include="scripts\jquery-2.1.1.js" />
     <Content Include="scripts\jquery-2.1.1.min.js" />
     <Content Include="scripts\jquery-ui-1.10.4.js" />
