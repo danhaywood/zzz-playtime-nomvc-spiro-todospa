@@ -4,15 +4,15 @@
 // tested
 var ToDoApp;
 (function (ToDoApp) {
-    ToDoApp.app.service('flattener', function (repLoader, $q) {
-        var flattener = this;
+    ToDoApp.app.service('transformer', function (repLoader, $q, transformStrategy) {
+        var transformer = this;
 
-        flattener.transform = function (url, transform) {
+        transformer.transform = function (url, c) {
             var deferred = $q.defer();
-            var obj = new Spiro.ResourceRepresentation({});
+            var obj = new c({});
             obj.hateoasUrl = url;
             repLoader.populate(obj).then(function (o) {
-                var flat = transform(o);
+                var flat = transformStrategy.transform(o);
                 deferred.resolve(flat);
             }, function () {
                 deferred.reject();
@@ -20,10 +20,6 @@ var ToDoApp;
 
             return deferred.promise;
         };
-
-        flattener.flatten = function (url) {
-            return flattener.transform(url, flattenObject);
-        };
     });
 })(ToDoApp || (ToDoApp = {}));
-//# sourceMappingURL=todoapp.services.flattener.js.map
+//# sourceMappingURL=todoapp.services.transformer.js.map
