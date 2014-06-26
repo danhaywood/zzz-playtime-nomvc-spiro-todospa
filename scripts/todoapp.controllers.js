@@ -6,16 +6,12 @@ var ToDoApp;
 (function (ToDoApp) {
     // tested
     ToDoApp.app.controller('HomeController', function ($scope, repLoader) {
-        var service = new Spiro.DomainObjectRepresentation({});
-        service.hateoasUrl = "http://localhost:43055/rest/services/Domain.ToDoItems";
-
-        repLoader.populate(service).then(function (srv) {
-            var action = srv.actionMember("NotYetComplete").getDetails();
-            return repLoader.populate(action);
-        }).then(function (details) {
-            var actionResult = details.getInvoke();
-            return repLoader.populate(actionResult);
-        }).then(function (ar) {
+        //repLoader.populate(new Spiro.ActionResultRepresentation({
+        //      hateoasUrl: "http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke"
+        //})).then((ar: Spiro.ActionResultRepresentation) => {
+        var actionResult = new Spiro.ActionResultRepresentation({});
+        actionResult.hateoasUrl = "http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke";
+        repLoader.populate(actionResult).then(function (ar) {
             var list = ar.result().list().value().models;
 
             $scope["todoItems"] = [];

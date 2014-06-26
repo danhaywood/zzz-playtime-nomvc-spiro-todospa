@@ -9,17 +9,14 @@ module ToDoApp {
 	// tested
     app.controller('HomeController', ($scope: ng.IScope, repLoader : Spiro.Angular.IRepLoader) => {
 
-        var service = new Spiro.DomainObjectRepresentation({});
-        service.hateoasUrl = "http://localhost:43055/rest/services/Domain.ToDoItems";
+        //repLoader.populate(new Spiro.ActionResultRepresentation({
+        //      hateoasUrl: "http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke"
+        //})).then((ar: Spiro.ActionResultRepresentation) => {
 
-        repLoader.populate(service).then((srv: Spiro.DomainObjectRepresentation) => {
-            var action = srv.actionMember("NotYetComplete").getDetails();
-            return repLoader.populate(action);
-        }).then((details: Spiro.ActionRepresentation) => {
-
-            var actionResult = details.getInvoke();
-            return repLoader.populate(actionResult);
-        }).then((ar: Spiro.ActionResultRepresentation) => {
+        var actionResult = new Spiro.ActionResultRepresentation({
+        });
+        actionResult.hateoasUrl = "http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke";
+        repLoader.populate(actionResult).then((ar: Spiro.ActionResultRepresentation) => {
 
             var list = ar.result().list().value().models;
 
