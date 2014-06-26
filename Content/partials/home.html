@@ -25,7 +25,8 @@
                 <td>{{todoItem.Complete}}</td>
                 <td>{{todoItem.DueBy | date:'dd-MMM-yyyy'}}</td>
                 <td>
-                    <button class="btn btn-danger btn-xs" ng-click="delete($index)"><span class="glyphicon glyphicon-remove"></span><span class="label">Delete</span></button>
+                    <button class="btn btn-danger btn-xs" ng-click="delete(todoItem.nof_url)"><span class="glyphicon glyphicon-remove"></span><span class="label">Delete</span></button>
+                    <button class="btn btn-danger btn-xs" ng-click="complete(todoItem.nof_url)"><span class="glyphicon glyphicon-remove"></span><span class="label">Complete</span></button>
                 </td>
             </tr>
         </tbody>
