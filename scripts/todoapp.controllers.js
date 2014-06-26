@@ -5,7 +5,7 @@
 var ToDoApp;
 (function (ToDoApp) {
     // tested
-    ToDoApp.app.controller('HomeController', function ($scope, repLoader) {
+    ToDoApp.app.controller('HomeController', function ($scope, repLoader, $q) {
         //var todoItems = new Spiro.Helpers.FlatRepresentationLoader().populateL("http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke");
         //$scope["todoItems"] = todoItems;
         //repLoader.populate(new Spiro.ActionResultRepresentation({
@@ -20,18 +20,8 @@ var ToDoApp;
 
             _.each((list), function (l) {
                 var tgt = l.getTarget();
-
-                repLoader.populate(tgt).then(function (t) {
-                    var names = _.map(t.propertyMembers(), function (v, n) {
-                        return n;
-                    });
-                    var values = _.map(t.propertyMembers(), function (v) {
-                        return v.value().toString();
-                    });
-                    var tdi = _.object(names, values);
-                    tdi["nof_rep"] = t;
-
-                    $scope["todoItems"].push(tdi);
+                getPromise(tgt.hateoasUrl, repLoader, $q, flattenObject).then(function (fo) {
+                    $scope["todoItems"].push(fo);
                 });
             });
         });
@@ -50,13 +40,26 @@ var ToDoApp;
         return tdi;
     }
 
-    ToDoApp.app.controller('ToDoItemController', function ($scope, $routeParams, repLoader) {
-        var id = $routeParams.tdid;
-
+    function getPromise(url, repLoader, $q, transform) {
+        var deferred = $q.defer();
         var obj = new Spiro.DomainObjectRepresentation({});
-        obj.hateoasUrl = "http://localhost:43055/rest/objects/Domain.ToDoItem/" + id;
+        obj.hateoasUrl = url;
         repLoader.populate(obj).then(function (o) {
-            $scope["todoItem"] = flattenObject(o);
+            var flat = transform(o);
+            deferred.resolve(flat);
+        }, function () {
+            deferred.reject();
+        });
+
+        return deferred.promise;
+    }
+
+    ToDoApp.app.controller('ToDoItemController', function ($scope, $routeParams, repLoader, $q) {
+        var id = $routeParams.tdid;
+        var url = "http://localhost:43055/rest/objects/Domain.ToDoItem/" + id;
+
+        getPromise(url, repLoader, $q, flattenObject).then(function (fo) {
+            $scope["todoItem"] = fo;
         });
     });
 
