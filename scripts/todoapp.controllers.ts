@@ -21,7 +21,7 @@ module ToDoApp {
             _.each((list), (l: Spiro.Link) => {
 
                 var tgt = l.getTarget();
-                transformer.transform(tgt.hateoasUrl, Spiro.DomainObjectRepresentation).then((fo : ITransformedRepresentation) => {
+                transformer.transform(tgt.hateoasUrl, Spiro.DomainObjectRepresentation).then((fo : any) => {
                     $scope["todoItems"].push(fo);
                 });
 
@@ -33,7 +33,7 @@ module ToDoApp {
         var id = $routeParams.tdid;
         var url = "http://localhost:43055/rest/objects/Domain.ToDoItem/" + id;
 
-        transformer.transform(url, Spiro.DomainObjectRepresentation).then((fo : ITransformedRepresentation) => {
+        transformer.transform(url, Spiro.DomainObjectRepresentation).then((fo : any) => {
             $scope["todoItem"] = fo;
         });
     });

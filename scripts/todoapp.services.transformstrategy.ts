@@ -19,7 +19,7 @@ module ToDoApp {
 
             var names = _.map(o.propertyMembers(), (v, n: string) => n);
             var values = _.map(o.propertyMembers(), (v: Spiro.PropertyMember) => v.value().toString());
-            var tdi = <ITransformedRepresentation>_.object(names, values);
+            var tdi = <any>_.object(names, values);
             tdi["nof_rep"] = o;
             tdi["nof_url"] = "#" + "/" + o.domainType() + "/" + o.instanceId();
 

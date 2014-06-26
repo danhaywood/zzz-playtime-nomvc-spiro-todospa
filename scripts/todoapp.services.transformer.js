@@ -7,12 +7,12 @@ var ToDoApp;
     ToDoApp.app.service('transformer', function (repLoader, $q, transformStrategy) {
         var transformer = this;
 
-        transformer.transform = function (url, c) {
+        transformer.transform = function tt(url, c) {
             var deferred = $q.defer();
             var obj = new c({});
             obj.hateoasUrl = url;
             repLoader.populate(obj).then(function (o) {
-                var flat = transformStrategy.transform(o);
+                var flat = transformStrategy ? transformStrategy.transform(o) : o;
                 deferred.resolve(flat);
             }, function () {
                 deferred.reject();
