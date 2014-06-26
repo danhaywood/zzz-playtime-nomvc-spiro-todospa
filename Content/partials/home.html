@@ -19,7 +19,7 @@
         <tbody>
             <tr ng-repeat="todoItem in todoItems | filter:search">
                 <td>
-                    <a ui-sref="edit({id:{{$index}}})">{{todoItem.Description}}</a>
+                    <a href="#/todoitem/1">{{todoItem.Description}}</a>
                 </td>
                 <td>{{todoItem.Category}}</td>
                 <td>{{todoItem.Complete}}</td>

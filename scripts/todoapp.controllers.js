@@ -6,6 +6,8 @@ var ToDoApp;
 (function (ToDoApp) {
     // tested
     ToDoApp.app.controller('HomeController', function ($scope, repLoader) {
+        //var todoItems = new Spiro.Helpers.FlatRepresentationLoader().populateL("http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke");
+        //$scope["todoItems"] = todoItems;
         //repLoader.populate(new Spiro.ActionResultRepresentation({
         //      hateoasUrl: "http://localhost:43055/rest/services/Domain.ToDoItems/actions/NotYetComplete/invoke"
         //})).then((ar: Spiro.ActionResultRepresentation) => {
@@ -27,6 +29,7 @@ var ToDoApp;
                         return v.value().toString();
                     });
                     var tdi = _.object(names, values);
+                    tdi["nof_rep"] = t;
 
                     $scope["todoItems"].push(tdi);
                 });
@@ -34,7 +37,27 @@ var ToDoApp;
         });
     });
 
-    ToDoApp.app.controller('ToDoItemController', function ($scope) {
+    function flattenObject(o) {
+        var names = _.map(o.propertyMembers(), function (v, n) {
+            return n;
+        });
+        var values = _.map(o.propertyMembers(), function (v) {
+            return v.value().toString();
+        });
+        var tdi = _.object(names, values);
+        tdi["nof_rep"] = o;
+
+        return tdi;
+    }
+
+    ToDoApp.app.controller('ToDoItemController', function ($scope, $routeParams, repLoader) {
+        var id = $routeParams.tdid;
+
+        var obj = new Spiro.DomainObjectRepresentation({});
+        obj.hateoasUrl = "http://localhost:43055/rest/objects/Domain.ToDoItem/" + id;
+        repLoader.populate(obj).then(function (o) {
+            $scope["todoItem"] = flattenObject(o);
+        });
     });
 
     ToDoApp.app.controller('CreateController', function ($scope) {
