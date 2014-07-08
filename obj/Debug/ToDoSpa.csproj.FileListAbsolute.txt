@@ -1,5 +1,0 @@
-e:\Users\scasc_000\Documents\Visual Studio 2012\Projects\ToDoSpa\ToDoSpa\bin\ToDoSpa.dll
-e:\Users\scasc_000\Documents\Visual Studio 2012\Projects\ToDoSpa\ToDoSpa\bin\ToDoSpa.pdb
-e:\Users\scasc_000\Documents\Visual Studio 2012\Projects\ToDoSpa\ToDoSpa\obj\Debug\ToDoSpa.dll
-e:\Users\scasc_000\Documents\Visual Studio 2012\Projects\ToDoSpa\ToDoSpa\obj\Debug\ToDoSpa.pdb
-e:\Users\scasc_000\Documents\Visual Studio 2012\Projects\ToDoSpa\ToDoSpa\obj\Debug\ToDoSpa.csprojResolveAssemblyReference.cache
