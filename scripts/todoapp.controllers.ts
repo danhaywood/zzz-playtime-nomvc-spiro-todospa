@@ -8,6 +8,7 @@ module ToDoApp {
 
   
     app.controller('HomeController', ($scope: ng.IScope, repLoader : Spiro.Angular.IRepLoader, transformer : ITransformer, $location : ng.ILocationService) => {
+
         transformer.transform(Spiro.appPath + "/services/Domain.ToDoItems/actions/NotYetComplete/invoke", 
             Spiro.ActionResultRepresentation).then((todoItems: any) => {
             $scope["todoItems"] = todoItems;
